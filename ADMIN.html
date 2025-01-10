@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panneau Admin - Optique Saadi</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+   
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f7f7f7;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+
+.login-container {
+   
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #7b5cc3, #4d75e1);
+}
+
+
+h2 {
+    color: #340cd3;
+    font-size: 2rem;
+    margin-bottom: 60px;
+    text-align: center;
+    
+}
+
+
+form {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    justify-content: center;
+    align-items: center;
+}
+
+
+input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+input:focus {
+    border-color: #4d75e1;
+    outline: none;
+    box-shadow: 0 0 8px rgba(77, 117, 225, 0.6);
+}
+
+
+button {
+    width: 100%;
+    padding: 14px;
+    background-color: #4d75e1;
+    color: white;
+    border: none;
+    font-size: 1.1rem;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #365cb2;
+}
+
+
+.error-message {
+    color: #dc3545;
+    font-size: 0.9rem;
+    text-align: center;
+    margin-top: 15px;
+}
+
+
+header {
+    background: linear-gradient(90deg, #0052cc, #007bff);
+    color: white;
+    padding: 15px;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+
+section {
+    margin: 20px auto;
+    max-width: 900px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+
+.form-container {
+    margin-bottom: 30px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    
+}
+
+
+input, button {
+    width: calc(100% - 20px);
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+input:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 4px rgba(0, 123, 255, 0.5);
+}
+
+button {
+    background-color: #0052cc;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0041a8;
+}
+
+
+.item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+}
+
+.item:hover {
+    transform: scale(1.02);
+}
+
+
+.item button {
+    padding: 8px 12px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.item button.modify {
+    background-color: #28a745;
+    color: white;
+}
+
+.item button.modify:hover {
+    background-color: #218838;
+}
+
+.item button {
+    background-color: #dc3545;
+    color: white;
+}
+
+.item button:hover {
+    background-color: #c82333;
+}
+
+
+.stats-container {
+    margin-top: 20px;
+    text-align: center;
+}
+
+canvas {
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
+    display: block;
+}
+
+
+.error-message {
+    color: #dc3545;
+    font-size: 0.9rem;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.product-list, .client-list, .supplier-list, .stock-list {
+    padding: 0;
+    list-style: none;
+    margin: 20px 0;
+}
+
+
+@media (max-width: 768px) {
+    section {
+        margin: 10px;
+        padding: 15px;
+    }
+}
+
+
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Se connecter</h2>
+        <center><form id="loginForm">
+            <input type="text" id="username" placeholder="Nom d'utilisateur" required>
+            <input type="password" id="password" placeholder="Mot de passe" required>
+            <button type="submit">Se connecter</button>
+        </form></center>
+        <div class="error-message" id="error-message"></div>
+    </div>
+
+    <section id="adminSection" style="display: none;">
+        <h2>Dashboard</h2>
+        <div class="stats-container">
+            <canvas id="statsChart" width="150" height="200"></canvas>
+        </div>
+
+        <h2>Ajouter un Nouveau Produit</h2>
+        <div class="form-container">
+            <input type="text" id="productName" placeholder="Nom du produit">
+            <input type="number" id="productPrice" placeholder="Prix du produit (en DH)">
+            <input type="file" id="productImage" placeholder="Ajouter une image">
+            <button onclick="addProduct()">Ajouter</button>
+        </div>
+
+        <section id="productListSection" class="product-list">
+            <h2>Liste des Produits</h2>
+            <div id="productList"></div>
+        </section>
+
+        <h2>Ajouter un Nouveau Client</h2>
+        <div class="form-container">
+            <input type="text" id="clientName" placeholder="Nom du client">
+            <input type="email" id="clientEmail" placeholder="Email du client">
+            <button onclick="addClient()">Ajouter Client</button>
+        </div>
+
+        <section id="clientListSection" class="client-list">
+            <h2>Liste des Clients</h2>
+            <div id="clientList"></div>
+        </section>
+
+        <h2>Ajouter un Fournisseur</h2>
+        <div class="form-container">
+            <input type="text" id="supplierName" placeholder="Nom du fournisseur">
+            <input type="text" id="supplierContact" placeholder="Contact du fournisseur">
+            <button onclick="addSupplier()">Ajouter Fournisseur</button>
+        </div>
+
+        <section id="supplierListSection" class="supplier-list">
+            <h2>Liste des Fournisseurs</h2>
+            <div id="supplierList"></div>
+        </section>
+
+        <h2>Gérer le Stock</h2>
+        <div class="form-container">
+            <input type="text" id="stockProductName" placeholder="Nom du produit">
+            <input type="number" id="stockQuantity" placeholder="Quantité">
+            <button onclick="manageStock()">Mettre à jour le Stock</button>
+        </div>
+
+        <section id="stockListSection" class="stock-list">
+            <h2>État du Stock</h2>
+            <div id="stockList"></div>
+        </section>
+    </section>
+
+    <script>
+        const products = JSON.parse(localStorage.getItem('products')) || [];
+        const clients = JSON.parse(localStorage.getItem('clients')) || [];
+        const suppliers = JSON.parse(localStorage.getItem('suppliers')) || [];
+         const stock = JSON.parse(localStorage.getItem('stock')) || {};
+
+        document.getElementById('loginForm').addEventListener('submit', (event) => {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            if (username === "admin" && password === "admin123") {
+                document.querySelector('.login-container').style.display = 'none';
+                document.getElementById('adminSection').style.display = 'block';
+                renderProducts();
+                renderClients();
+                renderSuppliers();
+                renderStock();
+                renderStats();
+                renderDashboard();
+            } else {
+                document.getElementById('error-message').textContent = "Identifiants incorrects.";
+            }
+        });
+
+        function addProduct() {
+            const name = document.getElementById('productName').value;
+            const price = document.getElementById('productPrice').value;
+            const colors = document.getElementById('productColors').value.split(',');
+            const image = document.getElementById('productImage').files[0];
+
+            if (!name || !price || !colors.length || !image) {
+                alert('Veuillez remplir tous les champs');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                const newProduct = { name, price, colors, image: reader.result };
+                products.push(newProduct);
+                localStorage.setItem('products', JSON.stringify(products));
+                renderProducts();
+            };
+            reader.readAsDataURL(image);
+        }
+
+        
+        function renderProducts() {
+    const productList = document.getElementById('productList');
+    productList.innerHTML = '';
+    products.forEach((product, index) => {
+        const productItem = document.createElement('div');
+        productItem.className = 'item';
+        productItem.innerHTML = `
+            <span>${product.name} - ${product.price} DH</span>
+            <div>
+                <button class="modify" onclick="modifyProduct(${index})">Modifier</button>
+                <button onclick="deleteProduct(${index})">Supprimer</button>
+            </div>
+        `;
+        productList.appendChild(productItem);
+    });
+}
+
+
+        function modifyProduct(index) {
+            const product = products[index];
+            const name = prompt('Modifier le nom:', product.name);
+            const price = prompt('Modifier le prix:', product.price);
+            if (name && price) {
+                products[index] = { ...product, name, price };
+                localStorage.setItem('products', JSON.stringify(products));
+                renderProducts();
+            }
+        }
+
+        function deleteProduct(index) {
+            products.splice(index, 1);
+            localStorage.setItem('products', JSON.stringify(products));
+            renderProducts();
+        }
+
+        function addClient() {
+            const name = document.getElementById('clientName').value;
+            const email = document.getElementById('clientEmail').value;
+
+            if (!name || !email) {
+                alert('Veuillez remplir tous les champs');
+                return;
+            }
+
+            clients.push({ name, email });
+            localStorage.setItem('clients', JSON.stringify(clients));
+            renderClients();
+        }
+
+        function renderClients() {
+    const clientList = document.getElementById('clientList');
+    clientList.innerHTML = '';
+    clients.forEach((client, index) => {
+        const clientItem = document.createElement('div');
+        clientItem.className = 'item';
+        clientItem.innerHTML = `
+            <span>${client.name} - ${client.email}</span>
+            <div>
+                <button class="modify" onclick="modifyClient(${index})">Modifier</button>
+                <button onclick="deleteClient(${index})">Supprimer</button>
+            </div>
+        `;
+        clientList.appendChild(clientItem);
+    });
+}
+
+        function modifyClient(index) {
+            const client = clients[index];
+            const name = prompt('Modifier le nom:', client.name);
+            const email = prompt('Modifier l\'email:', client.email);
+            if (name && email) {
+                clients[index] = { ...client, name, email };
+                localStorage.setItem('clients', JSON.stringify(clients));
+                renderClients();
+            }
+        }
+
+        function deleteClient(index) {
+            clients.splice(index, 1);
+            localStorage.setItem('clients', JSON.stringify(clients));
+            renderClients();
+        }
+
+        function addSupplier() {
+            const name = document.getElementById('supplierName').value;
+            const contact = document.getElementById('supplierContact').value;
+
+            if (!name || !contact) {
+                alert('Veuillez remplir tous les champs');
+                return;
+            }
+
+            suppliers.push({ name, contact });
+            localStorage.setItem('suppliers', JSON.stringify(suppliers));
+            renderSuppliers();
+        }
+
+        function renderSuppliers() {
+    const supplierList = document.getElementById('supplierList');
+    supplierList.innerHTML = '';
+    suppliers.forEach((supplier, index) => {
+        const supplierItem = document.createElement('div');
+        supplierItem.className = 'item';
+        supplierItem.innerHTML = `
+            <span>${supplier.name} - ${supplier.contact}</span>
+            <div>
+                <button class="modify" onclick="modifySupplier(${index})">Modifier</button>
+                <button onclick="deleteSupplier(${index})">Supprimer</button>
+            </div>
+        `;
+        supplierList.appendChild(supplierItem);
+    });
+}
+
+
+        function modifySupplier(index) {
+            const supplier = suppliers[index];
+            const name = prompt('Modifier le nom:', supplier.name);
+            const contact = prompt('Modifier le contact:', supplier.contact);
+            if (name && contact) {
+                suppliers[index] = { ...supplier, name, contact };
+                localStorage.setItem('suppliers', JSON.stringify(suppliers));
+                renderSuppliers();
+            }
+        }
+
+        function deleteSupplier(index) {
+            suppliers.splice(index, 1);
+            localStorage.setItem('suppliers', JSON.stringify(suppliers));
+            renderSuppliers();
+        }
+
+
+
+function manageStock() {
+    const productName = document.getElementById('stockProductName').value;
+    const quantity = parseInt(document.getElementById('stockQuantity').value, 10);
+
+    if (!productName || isNaN(quantity)) {
+        alert('Veuillez remplir tous les champs');
+        return;
+    }
+
+    stock[productName] = (stock[productName] || 0) + quantity;
+    localStorage.setItem('stock', JSON.stringify(stock));
+    renderStock();
+}
+
+function renderStock() {
+    const stockList = document.getElementById('stockList');
+    stockList.innerHTML = '';
+    Object.entries(stock).forEach(([productName, quantity]) => {
+        const stockItem = document.createElement('div');
+        stockItem.className = 'item';
+        stockItem.innerHTML = `
+            <span>${productName} - Quantité: ${quantity}</span>
+            <div>
+                <button class="modify" onclick="modifyStock('${productName}')">Modifier</button>
+                <button onclick="deleteStock('${productName}')">Supprimer</button>
+            </div>
+        `;
+        stockList.appendChild(stockItem);
+    });
+}
+
+function modifyStock(productName) {
+    const newQuantity = prompt(`Modifier la quantité pour "${productName}" :`, stock[productName]);
+    if (newQuantity !== null && !isNaN(newQuantity)) {
+        stock[productName] = parseInt(newQuantity, 10);
+        localStorage.setItem('stock', JSON.stringify(stock));
+        renderStock();
+    }
+}
+
+function deleteStock(productName) {
+    if (confirm(`Êtes-vous sûr de vouloir supprimer "${productName}" du stock ?`)) {
+        delete stock[productName];
+        localStorage.setItem('stock', JSON.stringify(stock));
+        renderStock();
+    }
+}
+
+renderStock();
+function renderStats() {
+    const ctx = document.getElementById('statsChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'bar', 
+        data: {
+            labels: ['Product 1', 'Product 2', 'Product 3'], 
+            datasets: [{
+                label: 'Products Sold',
+                data: [10, 20, 30], 
+                backgroundColor: ['#ff5733', '#33ff57', '#3357ff'],
+                borderColor: ['#ff5733', '#33ff57', '#3357ff'],
+                borderWidth: 1
+            }]
+        }
+    });
+}
+function renderStats() {
+    const ctx = document.getElementById('statsChart').getContext('2d');
+
+    
+    const productNames = Object.keys(stock);
+    const productQuantities = Object.values(stock);
+
+    new Chart(ctx, {
+        type: 'bar', 
+        data: {
+            labels: productNames, 
+            datasets: [{
+                label: 'Quantité en stock',
+                data: productQuantities,
+                backgroundColor: '#007bff', 
+                borderColor: '#0052cc', 
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    
+    const stats = document.getElementById('stats-container');
+    stats.innerHTML = `
+        <p>Total des produits en stock: ${productNames.length}</p>
+        <p>Total des clients enregistrés: ${clients.length}</p>
+        <p>Total des fournisseurs enregistrés: ${suppliers.length}</p>
+        <p>Total des produits ajoutés: ${products.length}</p>
+
+    `;
+}
+
+
+    </script>
+</body>
+</html> 

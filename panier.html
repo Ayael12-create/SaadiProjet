@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panier - Optique Saadi</title>
+    <style>
+       
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+            transition: text-decoration 0.3s;
+        }
+
+        header nav a:hover {
+            text-decoration: underline;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        #cart-items {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .cart-item span {
+            font-size: 1.1em;
+            color: #333;
+        }
+
+        .cart-item button {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 12px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .cart-item button:hover {
+            background-color: #c82333;
+        }
+
+        #checkout {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        #checkout button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #checkout button:hover {
+            background-color: #218838;
+        }
+
+        .empty-message {
+            text-align: center;
+            color: #666;
+            font-size: 1.2em;
+        }
+
+        #total {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        #payment-form {
+            margin-top: 30px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        #payment-form input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        #payment-form button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1em;
+        }
+
+        #payment-form button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div>Optique Saadi</div>
+        <nav>
+            <a href="prjt.html #home">Accueil</a>
+            <a href="prjt.html #products">Nos Produits</a>
+            <a href="panier.html">Panier</a>
+            <a href="prjt.html #contact">Contact</a>
+        </nav>
+    </header>
+    <main>
+        <h1>Votre Panier</h1>
+        <div id="cart-items">
+            
+        </div>
+        <div id="total"></div>
+        <div id="checkout">
+            <button onclick="checkout()">Passer à la Caisse</button>
+        </div>
+        <div id="payment-form" style="display: none;">
+            <h2>Informations de Paiement</h2>
+            <form id="payment-form">
+                <input type="text" name="name" placeholder="Nom Complet" required>
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="text" name="address" placeholder="Adresse" required>
+                <input type="text" name="card" placeholder="Numéro de carte" required>
+                <button type="submit">Payer</button>
+            </form>
+        </div>
+    </main>
+    <script>
+        const cartData = JSON.parse(localStorage.getItem('cart')) || [];
+        const cartItemsContainer = document.getElementById('cart-items');
+        const totalContainer = document.getElementById('total');
+        const paymentForm = document.getElementById('payment-form');
+
+        function displayCartItems() {
+            if (cartData.length === 0) {
+                cartItemsContainer.innerHTML = `<p class="empty-message">Votre panier est vide.</p>`;
+                totalContainer.innerHTML = '';
+                return;
+            }
+
+            cartItemsContainer.innerHTML = ''; 
+            let total = 0;
+            cartData.forEach((item, index) => {
+                const cartItem = document.createElement('div');
+                cartItem.classList.add('cart-item');
+                const price = item.price;  
+                total += price;  
+                cartItem.innerHTML = `
+                    <span>${item.name} - ${price} DH</span>
+                    <button onclick="removeFromCart(${index})">Supprimer</button>
+                `;
+                cartItemsContainer.appendChild(cartItem);
+            });
+
+            totalContainer.innerHTML = `Total: ${total} DH`;
+        }
+
+       
+        function removeFromCart(index) {
+            cartData.splice(index, 1);
+            localStorage.setItem('cart', JSON.stringify(cartData));
+            displayCartItems();
+        }
+
+        function checkout() {
+            if (cartData.length === 0) {
+                alert('Votre panier est vide.');
+                return;
+            }
+
+            alert('Merci pour votre achat !');
+            localStorage.removeItem('cart');
+            displayCartItems();
+
+            
+            paymentForm.style.display = 'block';
+        }
+
+        displayCartItems();
+    </script>
+</body>
+</html>

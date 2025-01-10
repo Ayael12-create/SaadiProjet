@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Optique Saadi</title>
+    <style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: black;
+    }
+    
+    header {
+        background-color: #333;
+        color: white;
+        padding: 10px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    header nav a, header .login {
+        color: white;
+        text-decoration: none;
+        margin: 0 15px;
+        font-weight: bold;
+        transition: text-decoration 0.3s;
+        cursor: pointer;
+    }
+    
+    header nav a:hover, header .login:hover {
+        text-decoration: underline;
+    }
+    
+    header .search-bar {
+        padding: 5px;
+        font-size: 1em;
+        border: none;
+        border-radius: 5px;
+    }
+    
+    /* Home Section */
+    #home {
+        position: relative;
+        height: 100vh;
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        animation: changeBackground 15s infinite;
+    }
+    
+    #home .caption {
+        color: white;
+        font-size: 3em;
+        text-align: center;
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+        background-color: rgba(0, 0, 0, 0.5);
+        padding: 20px 40px;
+        border-radius: 10px;
+    }
+    
+    @keyframes changeBackground {
+        0%, 100% { background-image: url('https://boursin-agencement.fr/wp-content/uploads/2023/09/agencement-magasin-optique-opticien-essayage.png'); }
+        33% { background-image: url('https://ingenieurchevallier.com/wp-content/uploads/2023/09/ingenieur-chevallier-metiers-optique-vision-formation.jpg'); }
+        66% { background-image: url('https://www.adpassurances.fr/fileadmin/_processed_/7/e/csm_OeilNerfOptique_8bf46d33b7.jpeg'); }
+    }
+    
+    /* Products Section */
+    #products {
+        padding: 20px;
+        background-color: black;
+        margin-top: 20px;
+    }
+    
+    #products h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: white;
+    }
+    
+    #product-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+    }
+    
+    .product {
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        width: 300px;
+        padding: 15px;
+        background-color: #fdfdfd;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        transition: transform 0.3s;
+    }
+    
+    .product img {
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+        border-radius: 5px;
+        transition: transform 0.3s ease-in-out;
+    }
+    
+    .product img:hover {
+        transform: scale(1.05);
+    }
+    
+    .product h3 {
+        margin: 10px 0;
+        font-size: 1.2em;
+        color: #333;
+    }
+    
+    .product p {
+        font-size: 0.9em;
+        color: #666;
+        margin: 10px 0;
+    }
+    
+    .product .price {
+        font-size: 1.2em;
+        color: #333;
+        margin: 10px 0;
+    }
+    
+    .product .colors {
+        margin: 10px 0;
+        font-size: 1em;
+    }
+    
+    .product .colors span {
+        padding: 5px;
+        border-radius: 50%;
+        margin: 0 5px;
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+    }
+    
+    .product button {
+        background-color: #333;
+        color: white;
+        padding: 8px 15px;
+        border: none;
+        border-radius: 5px;
+        font-size: 1em;
+        transition: background-color 0.3s, transform 0.2s;
+        cursor: pointer;
+    }
+    
+    .product button:hover {
+        background-color: #555;
+        transform: scale(1.05);
+    }
+   
+    #contact {
+        background-color: #f1f1f1;
+        padding: 40px 20px;
+    }
+    
+    #contact h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #333;
+    }
+    
+    #contact form {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+    
+    #contact input, #contact textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid black;
+        border-radius: 5px;
+        font-size: 1em;
+    }
+    
+    #contact button {
+        background-color: #333;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        font-size: 1.1em;
+        transition: background-color 0.3s;
+    }
+    
+    #contact button:hover {
+        background-color: #555;
+    }
+    
+    
+    footer {
+        background-color: #333;
+        color: white;
+        text-align: center;
+        padding: 10px 20px;
+    }
+    
+    footer a {
+        color: white;
+        text-decoration: none;
+    }
+    
+    /* Modal Styles */
+    #loginModal, #signupModal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    }
+    
+    .modal-content {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        width: 90%;
+        max-width: 400px;
+        text-align: center;
+        position: relative;
+    }
+    
+    .modal-content h2 {
+        margin-bottom: 20px;
+    }
+    
+    .modal-content input {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    
+    .modal-content button {
+        background-color: #333;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        font-size: 1em;
+    }
+    
+    .modal-content button:hover {
+        background-color: #555;
+    }
+    
+    .modal-close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: none;
+        border: none;
+        font-size: 1.5em;
+        cursor: pointer;
+    }
+</style>
+</head>
+<body>
+    <header>
+        <div>Optique Saadi</div>
+        <nav>
+            <a href="#home">Accueil</a>
+            <a href="#products">Nos Produits</a>
+            <a href="panier.html">Panier</a>
+            <a href="#contact">Contact</a>
+        </nav>
+        <input type="text" class="search-bar" placeholder="Rechercher un produit..." oninput="searchProduct(event)">
+        <div>
+            <span class="login" onclick="toggleModal('loginModal')">Se connecter</span>
+            |
+            <span class="login" onclick="toggleModal('signupModal')">Créer un compte</span>
+        </div>
+    </header>
+
+    
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="toggleModal('loginModal')">&times;</button>
+            <h2>Se connecter</h2>
+            <form id="loginForm" onsubmit="submitLogin(event)">
+                <input type="text" id="login-username" placeholder="Nom d'utilisateur" required>
+                <input type="password" id="login-password" placeholder="Mot de passe" required>
+                <button type="submit">Se connecter</button>
+            </form>
+        </div>
+    </div>
+
+  
+    <div id="signupModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="toggleModal('signupModal')">&times;</button>
+            <h2>Créer un compte</h2>
+            <form id="signupForm" onsubmit="submitSignUp(event)">
+                <input type="text" id="signup-username" placeholder="Nom d'utilisateur" required>
+                <input type="email" id="signup-email" placeholder="Email" required>
+                <input type="password" id="signup-password" placeholder="Mot de passe" required>
+                <button type="submit">Créer un compte</button>
+            </form>
+        </div>
+    </div>
+
+
+
+    <section id="home">
+        <div class="caption">Bienvenue chez Optique Saadi</div>
+    </section>
+
+   
+    <section id="products">
+        <h2>Nos Produits</h2>
+        <div id="product-list">
+            
+            <div class="product">
+                <img src="https://lnkobrand.com/cdn/shop/files/solsy-lunettes-de-vue-et-lunettes-de-soleil-au-42123746967808.jpg?v=1729212746&width=2048" alt="Lunettes de Vue Femme">
+                <h3>Lunettes de Vue Femme</h3>
+                <p>Élégance et style pour la correction visuelle.</p>
+                <div class="price">1200 DH</div>
+                
+                <button onclick="addToCart('Lunettes de Vue Femme', 1200)">Ajouter au Panier</button>
+            </div>
+            
+            <div class="product">
+                <img src="https://lopty-opticien.ma/cdn/shop/files/DSC_5351.jpg?v=1725875639" alt="Lunettes de Soleil Homme">
+                <h3>Lunettes de Soleil Homme</h3>
+                <p>Protection et style pour les journées ensoleillées.</p>
+                <div class="price">1500 DH</div>
+                
+                <button onclick="addToCart('Lunettes de Soleil Homme', 1500)">Ajouter au Panier</button>
+            </div>
+           
+            <div class="product">
+                <img src="https://img.ltwebstatic.com/images3_pi/2021/11/10/1636540178232dcb2a21d7a046b314c94914dd5213_thumbnail_720x.jpg" alt="Lunettes de Vue Homme">
+                <h3>Lunettes de Vue Homme</h3>
+                <p>Confort et précision visuelle.</p>
+                <div class="price">1350 DH</div>
+                
+                <button onclick="addToCart('Lunettes de Vue Homme', 1350)">Ajouter au Panier</button>
+            </div>
+            
+            <div class="product">
+                <img src="https://images-cdn.ubuy.ma/65af5b904bf57777ae174dcb-prada-sunglasses-pr-17ws-1ab5s0-black.jpg">
+                <h3>Lunettes de Soleil Femme</h3>
+                <p>Chic et protection UV.</p>
+                <div class="price">1600 DH</div>
+               
+                <button onclick="addToCart('Lunettes de Soleil Femme', 1600)">Ajouter au Panier</button>
+            </div>
+           
+            <div class="product">
+                <img src="https://www.marjanemall.ma/media/catalog/product/cache/36c9d346b6653f95ce7222f403adb694/_/p/_pdt2_9_8_7_1_700x700_AAAAF99987_2.jpg" alt="Lunettes de Soleil Femme">
+                <h3>Clips Lunette</h3>
+                <p>Chic et protection UV.</p>
+                <div class="price">1600 DH</div>
+                
+                <button onclick="addToCart('Clips Lunette', 1600)">Ajouter au Panier</button>
+            </div>
+           
+            <div class="product">
+                <img src="https://www.cdiscount.com/pdt2/6/5/6/1/700x700/auc2008922633656/rw/l028-14-5mm-lentille-de-contact-couleur-gris-mod.jpg" alt="Lunettes de Vue Mixte">
+                <h3>Les Lentilles</h3>
+                <div class="price">1400 DH</div>
+                
+                <button onclick="addToCart('Lunettes de Vue Mixte', 1400)">Ajouter au Panier</button>
+            </div>
+        </div>
+        
+    </section>
+    
+    <section id="contact">
+        <h2>Contactez-Nous</h2>
+        <form action="submit_contact_form.php" method="POST">
+            <input type="text" name="name" placeholder="Nom" required>
+            <input type="email" name="email" placeholder="Email" required>
+            <textarea name="message" placeholder="Votre message" required></textarea>
+            <button type="submit">Envoyer</button>
+        </form>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Optique Saadi - Tous droits réservés</p>
+    </footer>
+
+    <script>
+const users = [];
+let isLoggedIn = false; 
+
+
+function toggleModal(modalId) {
+    const modal = document.getElementById(modalId);
+    modal.style.display = modal.style.display === 'none' || !modal.style.display ? 'flex' : 'none';
+}
+
+
+function submitSignUp(event) {
+    event.preventDefault();
+    
+    const username = document.getElementById('signup-username').value.trim();
+    const email = document.getElementById('signup-email').value.trim();
+    const password = document.getElementById('signup-password').value.trim();
+
+    if (!username || !email || !password) {
+        alert('Tous les champs sont obligatoires pour créer un compte.');
+        return;
+    }
+
+    const userExists = users.find(user => user.email === email);
+    if (userExists) {
+        alert('Un compte avec cet email existe déjà.');
+        return;
+    }
+
+
+    users.push({ username, email, password });
+    alert('Compte créé avec succès. Vous pouvez maintenant vous connecter.');
+    document.getElementById('signupForm').reset();
+    toggleModal('signupModal');
+}
+
+function submitLogin(event) {
+    event.preventDefault();
+    
+    const username = document.getElementById('login-username').value.trim();
+    const password = document.getElementById('login-password').value.trim();
+
+    if (!username || !password) {
+        alert('Tous les champs sont obligatoires pour se connecter.');
+        return;
+    }
+
+    
+    const user = users.find(user => user.username === username && user.password === password);
+
+    if (user) {
+        alert(`Bienvenue, ${username} ! Vous êtes maintenant connecté.`);
+        isLoggedIn = true; 
+        toggleModal('loginModal');
+        applyDiscount(); 
+    } else {
+        alert('Nom d’utilisateur ou mot de passe incorrect.');
+    }
+}
+
+function searchProduct(event) {
+    const query = event.target.value.toLowerCase();
+    const products = document.querySelectorAll('.product');
+
+    products.forEach(product => {
+        const name = product.querySelector('h3').textContent.toLowerCase();
+        if (name.includes(query)) {
+            product.style.display = 'block';
+        } else {
+            product.style.display = 'none';
+        }
+    });
+}
+
+
+function addToCart(productName, productPrice) {
+    if (isLoggedIn) {
+        
+        productPrice *= 0.9; 
+    }
+    
+    const product = {
+        name: productName,
+        price: productPrice
+    };
+
+  
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    cart.push(product);
+    localStorage.setItem('cart', JSON.stringify(cart));
+
+    alert(`Produit ajouté : ${productName}`);
+    console.log('Panier actuel:', cart);
+}
+
+
+function displayCart() {
+    let cartContent = 'Votre panier :\n';
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    cart.forEach(item => {
+        cartContent += `${item.name} - 1 x ${item.price.toFixed(2)} DH\n`;
+    });
+    alert(cartContent || 'Votre panier est vide.');
+}
+
+function applyDiscount() {
+    const productList = document.querySelectorAll('.product');
+    productList.forEach(product => {
+        const priceElement = product.querySelector('.price');
+        let price = parseFloat(priceElement.textContent.replace(' DH', '').trim());
+        if (isLoggedIn) {
+            
+            price *= 0.9;
+        }
+        priceElement.textContent = `${price.toFixed(2)} DH`;
+    });
+}
+</script>
+    
+</body>
+</html>
